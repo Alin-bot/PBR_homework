@@ -6,7 +6,7 @@
 (always1)
 )
 
-(defrule AI
+(defrule pack1
 (always1)
 =>
 (printout t "iti place AI?" crlf)
@@ -45,4 +45,47 @@
 (AI nu)
 =>
 (printout t "Alege TPPM!" crlf)
+)
+
+
+(defrule pack2
+(always1)
+=>
+(printout t "iti plac stiintele umane?" crlf)
+(assert (uman (read)))
+(printout t "Iti place sa lucrezi cu back end-ul?" crlf)
+(assert (back-end (read)))
+(printout t "Iti place sa scrii referate?" crlf)
+(assert (referate (read)))
+)
+
+(defrule CC
+(uman nu)
+(back-end da)
+(referate nu)
+=>
+(printout t "Alege CC!" crlf)
+)
+
+(defrule ARMS
+(uman da)
+(back-end da)
+=>
+(printout t "Alege ARMS!" crlf)
+)
+
+(defrule PCPIT
+(uman da)
+(back-end nu)
+(referate da)
+=>
+(printout t "Alege PCPIT!" crlf)
+)
+
+(defrule HCI
+(uman da)
+(back-end nu)
+(referate nu)
+=>
+(printout t "Alege HCI!" crlf)
 )
