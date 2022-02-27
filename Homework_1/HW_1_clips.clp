@@ -89,3 +89,43 @@
 =>
 (printout t "Alege HCI!" crlf)
 )
+
+
+(defrule pack3
+(always1)
+=>
+(printout t "iti place hardware-ul?" crlf)
+(assert (hardware (read)))
+(printout t "Iti place sa lucrezi cu profesori FII?" crlf)
+(assert (FII (read)))
+(printout t "Iti plac masinile?" crlf)
+(assert (masini (read)))
+)
+
+(defrule MSD
+(hardware da)
+(FII nu)
+(masini nu)
+=>
+(printout t "Alege MSD!" crlf)
+)
+
+(defrule ISSA
+(masini da)
+=>
+(printout t "Alege ISSA!" crlf)
+)
+
+(defrule SCA
+(hardware da)
+(FII da)
+=>
+(printout t "Alege SCA!" crlf)
+)
+
+(defrule RPA
+(hardware nu)
+(FII da)
+=>
+(printout t "Alege RPA!" crlf)
+)
