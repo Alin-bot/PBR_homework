@@ -1,9 +1,4 @@
-(deffacts startup
-    (always1)
-)
-
-(defrule pack1
-    (always1)
+(defrule printer
     =>
     (printout t "Printer does not print?" crlf)
     (assert (print (read)))
