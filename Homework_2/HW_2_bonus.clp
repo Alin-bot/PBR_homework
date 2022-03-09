@@ -1,12 +1,25 @@
 (deffacts startup
     (lista 1 2 3 4 5)
-    (lista lista lista)
-    (lista 1 2 lista)
-    (minge 1 2 3)
 )
 
-(defrule list
-    (lista $?~lista)
+(defrule check_list
+    (not (exists (lista $?) (lista $? ?x $? ?x $?)))
     =>
-    (printout t "DA" crlf)
+    (printout t "da" crlf)
 )
+
+; (deffacts startup
+;     (lista 1 2 3 4 5)
+; )
+
+; (defrule check_list
+;     ?a<-(lista $? ?x $? ?x $?)
+;     =>
+;     (retract ?a)
+; )
+
+; (defrule print
+;     (lista $?)
+;     =>
+;     (printout t "DA" crlf)
+; )
