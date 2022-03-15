@@ -4,6 +4,7 @@
 
 (deffacts startup
     (lista 1 2 3 4 5)
+    (lista 8 4 6 2)
 )
 
 (defrule afiseaza_meniu
@@ -15,11 +16,11 @@
     (printout t "3. Adauga un element într-o lista." crlf)
     (printout t "4. Verifica daca lista este palindrom." crlf)
     (printout t "5. Afiseaza cel mai mic si cel mai mare element dintr-o lista." crlf)
-    (printout t "6. Afișeaza elementele care apar o singura data într-o lista." crlf)
+    (printout t "6. Afiseaza elementele care apar o singura data într-o lista." crlf)
     (printout t "7. Iesire." crlf)
 
-    (printout t “Dati optiunea:”)
-    (assert (optiune (read))
+    (printout t "Dati optiunea:")
+    (assert (optiune (read)))
 )
 
 (defrule optiune1
@@ -31,18 +32,46 @@
     (assert (meniu))
 )
 
+(defrule afisare_liste
+    (and
+        (afisare_lista)
+        (lista $?x)
+    )
+    =>
+    (printout t ?x crlf)
+)
+
+(defrule terminare_afisare_liste
+
+    ?a<-(afisare_lista)
+    =>
+    (retract ?a)
+    (printout t "Lista aleasa de tine va fi: ")
+    (assert (continuare_bubble (read)))
+)
+
 (defrule option2
     ?a<-(optiune 2)
     =>
     (retract ?a)
-    ; TODO: buuble sort algorithm
+    (printout t "Listele posibile sunt: " crlf)
+    (assert (afisare_lista))
+)
 
-
+(defrule continuare_bubble
+    ?a<-(continuare_bubble $?)
+    =>
     ; afiseaza lista sortata
-    (printout t "Lista sortata este: "  crlf)
+    (printout t "Lista sortata este: " ?a crlf)
 
     (assert (meniu))
 )
+
+
+
+
+
+
 
 (defrule option3
     ?a<-(optiune 3)
