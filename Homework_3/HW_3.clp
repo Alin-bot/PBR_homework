@@ -13,7 +13,7 @@
     (retract ?a)
     (printout t "1. Citeste o lista cu valori numerice." crlf)
     (printout t "2. Afiseaza lista sortata crescator cu BubbleSort." crlf)
-    (printout t "3. Adauga un element într-o lista." crlf)
+    (printout t "3. Adauga un element intr-o lista." crlf)
     (printout t "4. Verifica daca lista este palindrom." crlf)
     (printout t "5. Afiseaza cel mai mic si cel mai mare element dintr-o lista." crlf)
     (printout t "6. Afiseaza elementele care apar o singura data într-o lista." crlf)
@@ -32,22 +32,23 @@
     (assert (meniu))
 )
 
-(defrule afisare_liste
+; -------------------------------------------------------------------------
+
+(defrule afisare_liste_2
     (and
-        (afisare_lista)
+        (afisare_lista_2)
         (lista $?x)
     )
     =>
     (printout t ?x crlf)
 )
 
-(defrule terminare_afisare_liste
-
-    ?a<-(afisare_lista)
+(defrule terminare_afisare_liste_2
+    ?a<-(afisare_lista_2)
     =>
     (retract ?a)
     (printout t "Lista aleasa de tine va fi: ")
-    (assert (continuare_bubble (read)))
+    (assert (continuare_2 (read)))
 )
 
 (defrule option2
@@ -55,23 +56,19 @@
     =>
     (retract ?a)
     (printout t "Listele posibile sunt: " crlf)
-    (assert (afisare_lista))
+    (assert (afisare_lista_2))
 )
 
-(defrule continuare_bubble
-    ?a<-(continuare_bubble $?)
+(defrule continuare_2
+    (continuare_2 $?x)
     =>
     ; afiseaza lista sortata
-    (printout t "Lista sortata este: " ?a crlf)
+    (printout t "Lista sortata este: " ?x crlf)
 
     (assert (meniu))
 )
 
-
-
-
-
-
+; -------------------------------------------------------------------------
 
 (defrule option3
     ?a<-(optiune 3)
@@ -93,6 +90,8 @@
     (assert (meniu))
 )
 
+; -------------------------------------------------------------------------
+
 (defrule option4
     ?a<-(optiune 4)
     =>
@@ -109,21 +108,43 @@
     (assert (meniu))
 )
 
+; -------------------------------------------------------------------------
+
+(defrule afisare_liste_5
+    (and
+        (afisare_lista_5)
+        (lista $?x)
+    )
+    =>
+    (printout t ?x crlf)
+)
+
+(defrule terminare_afisare_liste_5
+    ?a<-(afisare_lista_5)
+    =>
+    (retract ?a)
+    (printout t "Lista aleasa de tine va fi: ")
+    (assert (continuare_5 (read)))
+)
+
 (defrule option5
     ?a<-(optiune 5)
     =>
     (retract ?a)
-    ; TODO: afisare liste disponibile
+    (printout t "Listele posibile sunt: " crlf)
+    (assert (afisare_lista_5))
+)
 
-
-    ; alegere lista din listele disponibile
-    (printout t "Lista pe care vrei sa o verifici este?..." crlf)
-
-    ; TODO: afisare elemente min si max
-
+(defrule continuare_5
+    (continuare_5 $?x)
+    =>
+    ; afiseaza min si max
+    (printout t "Elementele min si max sunt: " ?x crlf)
 
     (assert (meniu))
 )
+
+; -------------------------------------------------------------------------
 
 (defrule option6
     ?a<-(optiune 6)
@@ -140,6 +161,8 @@
 
     (assert (meniu))
 )
+
+; -------------------------------------------------------------------------
 
 (defrule option7
     ?a<-(optiune 7)
