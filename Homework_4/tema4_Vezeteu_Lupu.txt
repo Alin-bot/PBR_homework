@@ -1,0 +1,78 @@
+lang(armeana).
+lang(persana).
+lang(greaca).
+lang(aramaica).
+
+two_different_languages(P1, P2):-
+    lang(P1),
+    lang(P2),
+	P1 \== P2.
+
+speaks(P1, P2, Language):-
+    lang(P1),
+    lang(P2),
+    ((P1 == Language) ; (P2 == Language)).
+
+does_not_speak(P1, P2, Language):-
+    lang(P1),
+    lang(P2),
+    \+speaks(P1, P2, Language).
+
+common_language(Prof_A1, Prof_A2, Prof_B1, Prof_B2):-
+    lang(Prof_A1),
+    lang(Prof_A2),
+    lang(Prof_B1),
+    lang(Prof_B2),
+    (Prof_A1 == Prof_B1 ; Prof_A1 == Prof_B2;
+    Prof_A2 == Prof_B1 ; Prof_A2 == Prof_B2).
+
+% p_a can translate between p_b and p_c
+can_translate(P_a1, P_a2, P_b1, P_b2, P_c1, P_c2):-
+    lang(P_a1),
+    lang(P_a2),
+    lang(P_b1),
+    lang(P_b2),
+    lang(P_c1),
+    lang(P_c2),
+    common_language(P_a1, P_a2, P_b1, P_b2),
+    common_language(P_a1, P_a2, P_c1, P_c2).
+
+common_language_3(P_a1, P_a2, P_b1, P_b2, P_c1, P_c2):-
+    lang(P_a1),
+    lang(P_a2),
+    lang(P_b1),
+    lang(P_b2),
+    lang(P_c1),
+    lang(P_c2),
+    (   
+    (P_a1 == P_b1, P_b1 == P_c1);
+    (P_a1 == P_b1, P_b1 == P_c2);
+    (P_a1 == P_b2, P_b2 == P_c1);
+    (P_a1 == P_b2, P_b2 == P_c2);
+    (P_a2 == P_b1, P_b1 == P_c1);
+    (P_a2 == P_b1, P_b1 == P_c2);
+    (P_a2 == P_b2, P_b2 == P_c1);
+    (P_a2 == P_b2, P_b2 == P_c2)).
+    
+speaks_both_languages(P_1, P_2, L_1, L_2):-
+    lang(P_1),
+    lang(P_2),
+    ((P_1 == L_1, P_2 == L_2);
+    (P_1 == L_2, P_2 == L_1)),
+    P_1 \== P_2, L_1 \== L_2.
+
+profesori(S1, S2, A1, A2, E1, E2, Z1, Z2):-
+    two_different_languages(S1, S2),
+    two_different_languages(A1, A2),
+    two_different_languages(E1, E2),
+    two_different_languages(Z1, Z2),
+    does_not_speak(S1, S2, persana),
+    can_translate(S1, S2, A1, A2, E1, E2),
+    speaks(E1, E2, aramaica),
+    does_not_speak(Z1, Z2, aramaica),
+    common_language(E1, E2, Z1, Z2),
+    \+common_language_3(S1, S2, A1, A2, Z1, Z2),
+    \+speaks_both_languages(S1, S2, aramaica, armeana),
+    \+speaks_both_languages(A1, A2, aramaica, armeana),
+    \+speaks_both_languages(Z1, Z2, aramaica, armeana).
+    % \+speaks_both_languages(E1, E2, aramaica, armeana).
