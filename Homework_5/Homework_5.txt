@@ -1,0 +1,18 @@
+edge(1,2).
+edge(2,3).
+edge(3,4).
+edge(4,2).
+edge(2,4).
+
+path(A,B,Path) :-
+    travel(A,B,[],Q),
+    reverse(Q,Path).
+
+travel(A,B,P,[edge(A,B)|P]) :-
+    edge(A,B).
+
+travel(A,B,Visited,Path) :-
+    edge(A,C),
+    C \== B,
+    \+member(edge(A,C),Visited),
+    travel(C,B,[edge(A,C)|Visited],Path).
